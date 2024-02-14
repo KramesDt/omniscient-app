@@ -65,16 +65,6 @@ const SwapComponent = () => {
     setTxPending(true);
     let receipt;
 
-    const handleIncreaseAllowance = async()=> {
-      // Increase the allowance
-      setTxPending(true);
-      await increaseAllowance(srcToken, inputValue);
-      setTxPending(false);
-
-      // Set the swapbtn to "Swap" again
-      setSwapBtnText(SWAP);
-    }
-
     if (srcToken === ETH && destToken !== ETH) {
       receipt = await swapEthToToken(destToken, inputValue);
     } else if (srcToken !== ETH && destToken === ETH)
@@ -88,17 +78,27 @@ const SwapComponent = () => {
     else notifySuccess();
   };
 
+  const handleIncreaseAllowance = async () => {
+    // Increase the allowance
+    setTxPending(true);
+    await increaseAllowance(srcToken, inputValue);
+    setTxPending(false);
+
+    // Set the swapbtn to "Swap" again
+    setSwapBtnText(SWAP);
+  };
+
   const handleSwap = async () => {
     if (srcToken === ETH && destToken !== ETH) {
       performSwap();
-    }  else {
+    } else {
       // Check whether there is allowance when the swap deals with tokenToEth/tokenToToken
-      setTxPending(true)
-      const result = await hasValidAllowance(address, srcToken, inputValue)
-      setTxPending(false)
+      setTxPending(true);
+      const result = await hasValidAllowance(address, srcToken, inputValue);
+      setTxPending(false);
 
-      if (result) performSwap()
-      else handleInsufficientAllowance()
+      if (result) performSwap();
+      else handleInsufficientAllowance();
     }
   };
 
@@ -161,8 +161,7 @@ const SwapComponent = () => {
       <button
         className={getSwapBtnClassName()}
         onClick={() => {
-          if (swapBtnText === INCREASE_ALLOWANCE)
-            handleIncreaseAllowance()
+          if (swapBtnText === INCREASE_ALLOWANCE) handleIncreaseAllowance();
           else if (swapBtnText === SWAP) handleSwap();
         }}
       >
@@ -213,10 +212,10 @@ const SwapComponent = () => {
     try {
       if (srcToken !== ETH && destToken !== ETH) setOutputValue(inputValue);
       else if (srcToken === ETH && destToken !== ETH) {
-        const outValue = toEth(toWei(inputValue), 14);
+        const outValue = toEth(toWei(inputValue), 15);
         setOutputValue(outValue);
       } else if (srcToken !== ETH && destToken === ETH) {
-        const outValue = toEth(toWei(inputValue, 14));
+        const outValue = toEth(toWei(inputValue, 15));
         setOutputValue(outValue);
       }
     } catch (error) {
@@ -235,10 +234,10 @@ const SwapComponent = () => {
     try {
       if (srcToken !== ETH && destToken !== ETH) setInputValue(outputValue);
       else if (srcToken === ETH && destToken !== ETH) {
-        const outValue = toEth(toWei(outputValue, 14));
+        const outValue = toEth(toWei(outputValue, 15));
         setInputValue(outValue);
       } else if (srcToken !== ETH && destToken === ETH) {
-        const outValue = toEth(toWei(outputValue), 14);
+        const outValue = toEth(toWei(outputValue), 15);
         setInputValue(outValue);
       }
     } catch (error) {
