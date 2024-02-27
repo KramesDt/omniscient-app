@@ -3,9 +3,9 @@ import { ArrowSmUpIcon } from "@heroicons/react/outline";
 
 const NavItems = () => {
   const SWAP = "Swap";
-  const TRADINGVIEW = "Trading View";
-  const VOTE = "Vote";
-  const CHART = "Charts";
+  const CHART = "Chart";
+  const TRADE = "Trade";
+  const UNISWAP = "Uniswap";
 
   const [selectedNavItem, setSelectedNavItem] = useState(SWAP);
   const currentSelection = selectedNavItem;
@@ -20,19 +20,19 @@ const NavItems = () => {
         {SWAP}
       </p>
       <p
-        className={getNavIconClassName(TRADINGVIEW)}
-        onClick={() => setSelectedNavItem(TRADINGVIEW)}
-      >
-        {TRADINGVIEW}
-      </p>
-      <p
-        className={getNavIconClassName(VOTE)}
-        onClick={() => setSelectedNavItem(VOTE)}
-      >
-        {VOTE}
-      </p>
-      <p
         className={getNavIconClassName(CHART)}
+        onClick={() => setSelectedNavItem(CHART)}
+      >
+        {CHART}
+      </p>
+      <p
+        className={getNavIconClassName(TRADE)}
+        onClick={() => setSelectedNavItem(TRADE)}
+      >
+        {TRADE}
+      </p>
+      <p
+        className={getNavIconClassName(UNISWAP)}
         onClick={() => window.open("https://info.uniswap.org/#/", "_blank")}
       >
         {CHART}
